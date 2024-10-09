@@ -22,7 +22,9 @@ namespace shop_app
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
-            });
+            }).AddEntityFrameworkStores<UserContext>();
+
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 

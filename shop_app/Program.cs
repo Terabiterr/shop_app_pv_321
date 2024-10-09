@@ -28,7 +28,9 @@ namespace shop_app
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequiredLength = 4;
-            }).AddEntityFrameworkStores<UserContext>();
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<UserContext>();
 
             builder.Services.AddControllersWithViews();
 

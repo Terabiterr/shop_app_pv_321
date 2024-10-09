@@ -27,7 +27,7 @@
                 </ul>
             </div>
         } 
-        else
+        else if(User.IsInRole("admin"))
         {
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary">@User.Identity.Name</button>
@@ -41,6 +41,25 @@
                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Read">Read Products</a></li>
                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Update">Update Product</a></li>
                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Details">Details Product</a></li>
+                    <li>
+                        <form asp-controller="User" asp-action="Logout" method="post">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary">@User.Identity.Name</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/">Home</a></li>
                     <li>
                         <form asp-controller="User" asp-action="Logout" method="post">
                             <button class="btn btn-danger" type="submit">Logout</button>

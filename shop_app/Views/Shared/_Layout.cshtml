@@ -20,11 +20,10 @@
                     <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/">Home</a></li>
-                    <li><a class="dropdown-item" href="/User/Login">Login</a></li>
-                    <li><a class="dropdown-item" href="/User/Create">Create</a></li>
+                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Login</a></li>
+                    <li><a class="dropdown-item" asp-controller="User" asp-action="Create">Create</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
             </div>
         } 
@@ -37,12 +36,16 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/">Home</a></li>
-                    <li><a class="dropdown-item" href="/Product/Create">Create Product</a></li>
-                    <li><a class="dropdown-item" href="/Product/Delete">Delete Product</a></li>
-                    <li><a class="dropdown-item" href="/Product/Read">Read Products</a></li>
-                    <li><a class="dropdown-item" href="/Product/Update">Update Product</a></li>
-                    <li><a class="dropdown-item" href="/Product/Details">Details Product</a></li>
-                    <li><a class="dropdown-item" href="/User/Logout">Logout</a></li>
+                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Create">Create Product</a></li>
+                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Delete">Delete Product</a></li>
+                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Read">Read Products</a></li>
+                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Update">Update Product</a></li>
+                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Details">Details Product</a></li>
+                    <li>
+                        <form asp-controller="User" asp-action="Logout" method="post">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>

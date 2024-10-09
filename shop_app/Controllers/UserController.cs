@@ -35,7 +35,8 @@ namespace shop_app.Controllers
             var result = await _userManager.CreateAsync(newUser, password);
             if(result.Succeeded)
             {
-                return Ok("User is registered successfully");
+                //return Ok("User is registered successfully");
+                return RedirectToAction("Index", "Home");
             }
             return BadRequest("Error register!");
         }
@@ -63,9 +64,15 @@ namespace shop_app.Controllers
             {
                 //HttpContext.Session.SetString("login", email);
                 //return Ok("The user is authorized ...");
-                return Redirect("~/Home/Index");
+                return RedirectToAction("Index", "Home");
             }
             return BadRequest("Error auth ...");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

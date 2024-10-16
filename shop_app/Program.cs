@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using shop_app.Services;
 
 namespace shop_app
 {
@@ -34,6 +35,8 @@ namespace shop_app
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<IServiceProduct, ServiceProduct>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -48,10 +51,10 @@ namespace shop_app
                 app.UseHsts();
             }
 
+            app.UseRouting();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseRouting();
 
             app.UseAuthorization();
             app.UseAuthentication();

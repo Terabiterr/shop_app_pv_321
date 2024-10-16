@@ -1,4 +1,5 @@
-﻿using shop_app.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using shop_app.Models;
 
 namespace shop_app.Services
 {
@@ -13,34 +14,67 @@ namespace shop_app.Services
     public class ServiceProduct : IServiceProduct
     {
         private readonly ProductContext _productContext;
-        public ServiceProduct(ProductContext productContext)
+        private readonly ILogger<ServiceProduct> _logger;
+        public ServiceProduct(
+            ProductContext productContext, 
+            ILogger<ServiceProduct> logger)
         {
             _productContext = productContext;
+            _logger = logger;
         }
 
-        public Task<Product?> CreateAsync(Product? product)
+        public async Task<Product?> CreateAsync(Product? product)
         {
-            throw new NotImplementedException();
+            if(product == null)
+            {
+                _logger.LogWarning("Attempt created a product with null");
+                return null;
+            }
+            await _productContext.AddAsync(product);
+            await _productContext.SaveChangesAsync();
+            return product;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var product = await _productContext.Products.FindAsync(id);
+            if(product == null)
+            {
+                return false;
+            }
+            _productContext.Products.Remove(product);
+            await _productContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Product?> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _productContext.Products.FindAsync(id);
         }
 
-        public Task<IEnumerable<Product>> ReadAsync()
+        public async Task<IEnumerable<Product>> ReadAsync()
         {
-            throw new NotImplementedException();
+            return await _productContext.Products.ToListAsync();
         }
 
-        public Task<Product?> UpdateAsync(int id, Product? product)
+        public async Task<Product?> UpdateAsync(int id, Product? product)
         {
-            throw new NotImplementedException();
+            if (product == null || id != product.Id)
+            {
+                _logger.LogWarning($"{nameof(Product)}: {id}");
+                return null;
+            }
+            try
+            {
+                _productContext.Products.Update(product);
+                await _productContext.SaveChangesAsync();
+                return product;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex.Message);
+                return null;
+            }
         }
     }
 }

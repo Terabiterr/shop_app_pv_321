@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace shop_app.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20241009165634_InitUser")]
-    partial class InitUser
+    [Migration("20241016182012_InitCreateUser")]
+    partial class InitCreateUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

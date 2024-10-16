@@ -10,6 +10,9 @@ namespace shop_app
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            builder.Services.AddScoped<IServiceProduct, ServiceProduct>();
+
             builder.Services.AddDbContext<ProductContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -34,8 +37,6 @@ namespace shop_app
                 .AddEntityFrameworkStores<UserContext>();
 
             builder.Services.AddControllersWithViews();
-
-            builder.Services.AddScoped<IServiceProduct, ServiceProduct>();
 
             var app = builder.Build();
 

@@ -25,7 +25,10 @@ namespace shop_app.Controllers
             return View(product);
         }
         [HttpGet]
-        public IActionResult Create() => View();
+        public IActionResult Page404() => View();
+        [HttpGet]
+        public IActionResult Create()
+            => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpPost]
@@ -40,7 +43,8 @@ namespace shop_app.Controllers
             return View(product);
         }
         [HttpGet]
-        public IActionResult Update() => View();
+        public IActionResult Update() 
+            => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpPost]
@@ -55,7 +59,8 @@ namespace shop_app.Controllers
             return View(product);
         }
         [HttpGet]
-        public IActionResult Delete() => View();
+        public IActionResult Delete()
+            => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Delete(int id)

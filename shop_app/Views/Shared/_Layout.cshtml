@@ -12,6 +12,8 @@
 </head>
 <body>
     <header>
+        <a class="btn btn-light" asp-controller="Product" asp-action="Read">Read Products</a>
+        <hr />
         @if(!User.Identity.IsAuthenticated)
         {
             <div class="btn-group">
@@ -20,7 +22,6 @@
                     <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Read">Read Products</a></li>
                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Login</a></li>
                     <li><a class="dropdown-item" asp-controller="User" asp-action="Create">Create</a></li>
@@ -41,7 +42,6 @@
                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Delete">Delete Product</a></li>
                     
                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Update">Update Product</a></li>
-                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Details">Details Product</a></li>
                     <li>
                         <form asp-controller="User" asp-action="Logout" method="post">
                             <button class="btn btn-danger" type="submit">Logout</button>

@@ -46,7 +46,7 @@ namespace shop_app.Controllers
         [HttpGet]
         public IActionResult Update() 
             => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")] //if admin and moderator [Authorize(Roles = "admin,moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, [Bind("Id,Name,Price,Description")] Product product)

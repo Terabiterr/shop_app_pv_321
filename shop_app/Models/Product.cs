@@ -10,7 +10,7 @@ namespace shop_app.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } = 0;
         [Required]
-        [StringLength(50)]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "min: 2, max: 20")]
         public string? Name { get; set; } = string.Empty;
         [Required]
         [Precision(10, 2)]

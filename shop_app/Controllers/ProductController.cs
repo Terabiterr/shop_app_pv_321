@@ -30,11 +30,12 @@ namespace shop_app.Controllers
         public IActionResult Create()
             => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
         [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Price,Description")] Product product)
         {
+            Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Description: {product.Description}");
+            Console.WriteLine(product.Id.GetType());
             if(ModelState.IsValid)
             {
                 _ = await _serviceProduct.CreateAsync(product);
@@ -46,7 +47,6 @@ namespace shop_app.Controllers
         public IActionResult Update() 
             => (User.IsInRole("admin")) ? View() : RedirectToAction("Page404");
         [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, [Bind("Id,Name,Price,Description")] Product product)

@@ -57,8 +57,8 @@ namespace shop_app
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",

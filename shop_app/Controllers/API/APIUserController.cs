@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using shop_app.Models;
 
 namespace shop_app.Controllers.API
 {
@@ -23,44 +24,43 @@ namespace shop_app.Controllers.API
         }
         //Register
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string email, string password)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if(!ModelState.IsValid)
             {
-                return BadRequest("Email or password are error!");
+                return BadRequest(new { message = "The model is invalid ..." });
             }
             var newUser = new IdentityUser
             {
-                Email = email,
-                UserName = email,
+                Email = model.Email,
+                UserName = model.Email,
                 EmailConfirmed = true //Imitation check email
             };
-            var result = await _userManager.CreateAsync(newUser, password);
+            var result = await _userManager.CreateAsync(newUser, model.Password);
             if (result.Succeeded)
             {
-                return Ok("User is registered successfully ...");
+                return Ok(new { message = "Registered successfully ..." });
             }
             return BadRequest(result.Errors);
         }
         [HttpPost("auth")]
-        public async Task<IActionResult> Auth(string email, string password)
+        public async Task<IActionResult> Auth([FromBody] LoginModel model)
         {
-            Console.WriteLine($"Login: {email}, password: {password}");
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Email or password are error!");
+                return BadRequest(new { message = "The model is invalid ..." });
             }
             var result = await _signInManager.PasswordSignInAsync(
-                email,
-                password,
+                model.Email,
+                model.Password,
                 isPersistent: false,
                 lockoutOnFailure: false
                 );
             if (result.Succeeded)
             {
-                return Ok("The user is authorized ...");
+                return Ok(new { message = "The user is authorized ..." });
             }
-            return BadRequest("Invalid email or password ...");
+            return BadRequest(new { message = "Invalid email or password ..." });
         }
         [HttpPost]
         public async Task<IActionResult> AccessDenied()

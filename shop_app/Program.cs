@@ -65,6 +65,18 @@ namespace shop_app
                     };
                 });
 
+            //Add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("*", policy =>
+                {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+
+                });
+            });
 
             builder.Services.AddAuthorization();
 
@@ -85,6 +97,8 @@ namespace shop_app
             }
 
             app.UseRouting();
+
+            app.UseCors("*"); //Important before auth
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
